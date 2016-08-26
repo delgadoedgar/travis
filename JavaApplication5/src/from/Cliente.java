@@ -188,8 +188,18 @@ public class Cliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -244,6 +254,36 @@ public class Cliente extends javax.swing.JFrame {
     private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombresActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        Limpiar();
+        Habilitar();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        try {
+            String sql ="insert into contactos(nombre, direccion, telefono, correo)"+
+                    "values(?,?,?,?)";
+            PreparedStatement ps= conn.prepareCall(sql);
+            ps.setString(1, txtNombres.getText());
+            ps.setString(2, txtDireccion.getText());
+            ps.setString(3, txtTelefono.getText());
+            ps.setString(4, txtCorreo.getText());
+            
+    
+  int n = ps.executeUpdate();
+  if(n>0){
+  JOptionPane.showMessageDialog(null, "Datos Guardado corretamente");
+  }
+        } catch (Exception e) {
+        
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
+        }
+        Llenar();
+        Limpiar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
