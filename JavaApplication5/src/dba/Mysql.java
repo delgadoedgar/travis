@@ -21,5 +21,15 @@ public class Mysql {
     private static String url = "jbdc:mysql://localhost/" + db;
     private static Connection Conn;
     
+    public static Connection  geConnection(){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+             Conn=DriverManager.getConnection(url, user, pass);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, "Error" + e.getMessage());
+        }
+        return Conn;
+    
+    }   
 
 }

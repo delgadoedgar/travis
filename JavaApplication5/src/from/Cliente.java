@@ -5,17 +5,60 @@
  */
 package from;
 
+import javax.swing.DefaultButtonModel;
+import dba.Mysql;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
  */
 public class Cliente extends javax.swing.JFrame {
 
+    DefaultButtonModel model;
+    Connection conn;
+    Statement sent;
+
     /**
      * Creates new form Cliente
      */
     public Cliente() {
         initComponents();
+        conn = Mysql.geConnection();
+        Desabilitar();
+        Llenar();
+    }
+
+    void Desabilitar() {
+        txtNombres.setEditable(false);
+        txtDireccion.setEditable(false);
+        txtCorreo.setEditable(false);
+        txtTelefono.setEditable(false);
+
+    }
+
+    void Limpiar() {
+        txtNombres.setText("");
+        txtDireccion.setText("");
+        txtCorreo.setText("");
+        txtTelefono.setText("");
+    }
+
+    void Habilitar() {
+        txtNombres.setEditable(true);
+        txtDireccion.setEditable(true);
+        txtCorreo.setEditable(true);
+        txtTelefono.setEditable(true);
+        txtNombres.requestFocus();
+    }
+    void Llenar(){
+        try {
+            conn=Mysql.geConnection();
+            String[]titulo={"id","Nombre","Direccion","Telefono","Correo"};
+            String sql="select * from contactos";
+        } catch (Exception e) {
+        }
     }
 
     /**
