@@ -185,6 +185,11 @@ public class Cliente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnNuevo.setText("Nuevo");
@@ -204,6 +209,11 @@ public class Cliente extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
 
         bntEliminar.setText("Eliminar");
+        bntEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntEliminarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Cerrar");
 
@@ -284,6 +294,47 @@ public class Cliente extends javax.swing.JFrame {
         Llenar();
         Limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        if(evt.getButton()==1){
+        int fila = jTable1.getSelectedRow();
+            try {
+                Habilitar();
+                String sql= "select * from contactos where id" + jTable1.getValueAt(fila, 0);
+                conn.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                rs.next();
+                txtNombres.setText(rs.getString("nombres"));
+                txtDireccion.setText(rs.getString("direccion"));
+                txtTelefono.setText(rs.getString("telefono"));
+                txtCorreo.setText(rs.getString("correo"));
+                
+            } catch (Exception e) {
+            }
+        }
+        
+        Habilitar();
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void bntEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            int fila=jTable1.getSelectedRow();
+            String sql ="delate from contactos where id="+jTable1.getValueAt(fila, 0);
+            sent = conn.createStatement();
+            int n= sent.executeUpdate(sql);
+            if (n>0){
+            Llenar();
+            JOptionPane.showMessageDialog(null, "Datos ELIMIADOSSSS");
+            Llenar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
+        }
+    }//GEN-LAST:event_bntEliminarActionPerformed
 
     /**
      * @param args the command line arguments
