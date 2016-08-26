@@ -5,7 +5,7 @@
  */
 package from;
 
-import javax.swing.DefaultButtonModel;
+import javax.swing.table.DefaultTableModel;
 import dba.Mysql;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Cliente extends javax.swing.JFrame {
 
-    DefaultButtonModel model;
+    DefaultTableModel model;
     Connection conn;
     Statement sent;
 
@@ -55,9 +55,29 @@ public class Cliente extends javax.swing.JFrame {
     void Llenar(){
         try {
             conn=Mysql.geConnection();
-            String[]titulo={"id","Nombre","Direccion","Telefono","Correo"};
+            String[]titulos={"id","Nombre","Direccion","Telefono","Correo"};
             String sql="select * from contactos";
+            model = new DefaultTableModel(null, titulos);
+            sent= conn.createStatement();
+            ResultSet rs= sent.executeQuery(sql);
+            
+            String[]fila= new String[5];
+            
+            
+            while(rs.next()){
+            fila[0]=rs.getString("id");
+            fila[1]=rs.getString("nombre");
+            fila[2]=rs.getString("direccion");
+            fila[3]=rs.getString("telfono");
+            fila[4]=rs.getString("correo");
+            
+            model.addRow(fila);
+            
+            
+            }
+            jTable1.setModel(model);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
