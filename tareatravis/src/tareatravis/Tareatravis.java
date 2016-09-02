@@ -30,7 +30,13 @@ public class Tareatravis {
 
             switch(op)
             {
-                
+                case 1:
+                    n1=Double.parseDouble(JOptionPane.showInputDialog("Ingrese numero 1"));
+                    n2=Double.parseDouble(JOptionPane.showInputDialog("Ingrese numero 2"));
+                    s=n1+n2;
+                    JOptionPane.showMessageDialog(null,"La suma es:"+s);
+                    break;
+              
             }
         }while(op!=5);
     }
